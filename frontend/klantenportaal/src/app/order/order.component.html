@@ -1,0 +1,56 @@
+<div class="container" *ngIf="orderDetail">
+    <div class="order-details">
+        <div>
+            <h2>Order Details for {{ orderDetail.referenceNumber }}</h2>
+            <h4>Customer Reference Number: {{ orderDetail.customerReferenceNumber }}</h4>
+        </div>
+        <iframe *ngIf="iframeSrc != null" #vesselMapIframe [src]="iframeSrc" width="100%" height="300"
+            frameborder="0"></iframe>
+        <p><strong>Status: </strong> <br>{{ orderDetail.state || 'TBD' }}</p>
+        <p><strong>Transport Type: </strong> <br>{{ orderDetail.transportType || 'TBD' }}</p>
+        <p><strong>Port of Loading Code: </strong> <br>{{ orderDetail.portOfOriginCode || 'TBD' }}</p>
+        <p><strong>Port of Destination Code: </strong> <br>{{ orderDetail.portOfDestinationCode || 'TBD' }}</p>
+        <p><strong>Port of Loading Name: </strong> <br>{{ orderDetail.portOfOriginName || 'TBD' }}</p>
+        <p><strong>Port of Destination Name: </strong> <br>{{ orderDetail.portOfDestinationName || 'TBD' }}</p>
+        <p><strong>ETS: </strong> <br>{{ orderDetail.ets || 'TBD' }}</p>
+        <p><strong>ETA: </strong> <br>{{ orderDetail.eta || 'TBD' }}</p>
+        <p><strong>ATS: </strong> <br>{{ orderDetail.ats || 'TBD' }}</p>
+        <p><strong>ATA: </strong> <br>{{ orderDetail.ata || 'TBD' }}</p>
+        <p><strong>Estimated Time Cargo On Quay: </strong> <br>{{ orderDetail.estimatedTimeCargoOnQuay || 'TBD' }}</p>
+        <p><strong>Actual Time Cargo Loaded: </strong> <br>{{ orderDetail.actualTimeCargoLoaded || 'TBD' }}</p>
+        <p><strong>Ship Name: </strong> <br>{{ orderDetail.shipName || 'TBD' }}</p>
+        <p><strong>Ship IMO: </strong> <br>{{ orderDetail.shipIMO || 'TBD' }}</p>
+        <p><strong>Ship MMSI: </strong> <br>{{ orderDetail.shipMMSI || 'TBD' }}</p>
+        <p><strong>Ship Type: </strong> <br>{{ orderDetail.shipType || 'TBD' }}</p>
+        <p><strong>Cargo Type: </strong> <br>{{ orderDetail.cargoType || 'TBD' }}</p>
+        <p><strong>Pre Carriage: </strong> <br>{{ orderDetail.preCarriage || 'TBD' }}</p>
+        <p><strong>Total Weight: </strong> <br>{{ (getTotalWeight().toLocaleString() ) + ' kg' || 'TBD' }}</p>
+
+        <p><strong>Bill of Lading: </strong><a href="{{ orderDetail.billOfLadingDownloadLink }}"
+                target="_blank"><br>Download</a>
+        </p>
+        <p><strong>Packing List: </strong><a href="{{ orderDetail.packingListDownloadLink }}"
+                target="_blank"><br>Download</a>
+        </p>
+        <p><strong>Customs Documents: </strong><a href="{{ orderDetail.customsDownloadLink }}"
+                target="_blank"><br>Download</a>
+        </p>
+    </div>
+    <div class="products">
+        <h3>Products</h3>
+        <ul>
+            <li *ngFor="let product of orderDetail.products">
+                <p><strong>HS Code:</strong> {{ product.hsCode }}</p>
+                <p><strong>Name:</strong> {{ product.name }}</p>
+                <p><strong>Quantity:</strong> {{ product.quantity }}</p>
+                <p><strong>Weight:</strong> {{ (product.weight.toLocaleString() ) + ' kg' }}</p>
+                <p *ngIf="product.containerNumber != null"><strong>Container Number:</strong> {{ product.containerNumber
+                    }}</p>
+                <p *ngIf="product.containerSize != null"><strong>Container Size:</strong> {{ product.containerSize }} ft
+                </p>
+                <p *ngIf="product.containerType != null"><strong>Container Type:</strong> {{ product.containerType }}
+                </p>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,23 @@
+.navcontent {
+    display: flex;
+    flex-direction: row;
+    height: calc(100% - 50px);
+    overflow: auto;
+}
+
+.all {
+    height: 100%;
+}
+
+app-nav {
+    min-width: 150px;
+    max-width: 150px;
+}
+
+.content > :host {
+    width: 100%;
+}
+
+.content + app-orders {
+    width: 100%;
+}

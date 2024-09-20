@@ -1,0 +1,210 @@
+form {
+  display: flex;
+  flex-direction: row; 
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 80vh;
+  margin: 0 auto;
+  padding: 40px;
+  background: linear-gradient(to right, #646152, #9e9e9e);
+  border-radius: 8px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+  width: 80vw; 
+  color: #ffffff;
+}
+
+.form-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start; 
+  width: 50%;
+  margin-right: 20px;
+}
+
+
+.add-product {
+  align-self: flex-end; 
+  margin-top: 20px; 
+  transition: background-color 0.3s ease, color 0.3s ease; 
+}
+
+.add-product:hover {
+  background-color: #646152; 
+  color: #ffffff; 
+}
+
+
+form > div {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+input[type="text"],
+input[type="number"],
+select {
+  width: 20vw; 
+  padding: 15px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #333;
+}
+
+.type {
+  width: 21.5vw;
+}
+
+.submit {
+  width: 100%;
+  padding: 15px;
+  margin-top: 20px; 
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+select:focus {
+  outline: none;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+}
+
+button {
+  width: 100%; 
+  padding: 17px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #646152;
+  background-color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background-color: #646152;
+  color: #ffffff;
+}
+
+button:disabled {
+  background-color: #eeeeee;
+  color: #bbbbbb;
+  cursor: not-allowed;
+}
+
+.products-list {
+  overflow-y: auto; 
+  min-height: 100px; 
+  max-height: 300px; 
+  overflow-y: auto; 
+}
+
+
+@media (max-width: 768px) {
+  form {
+    flex-direction: column;
+    width: 90%;
+  }
+
+  .form-column {
+    width: 100%;
+    margin-right: 0;
+  }
+}
+
+
+.notifications-container {
+  width: 360px;
+  height: auto;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-shrink-0 {
+  flex-shrink: 0;
+}
+
+.success {
+  padding: 1rem;
+  border-radius: 0.375rem;
+  background-color: rgb(240 253 244);
+}
+
+.succes-svg {
+  color:  #646152;
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.success-prompt-wrap {
+  margin-left: 0.75rem;
+}
+
+.success-prompt-heading {
+  font-weight: bold;
+  color: rgb(22 101 52);
+}
+
+.success-prompt-prompt {
+  margin-top: 0.5rem;
+  color:  #646152;
+}
+
+.success-button-container {
+  display: flex;
+  margin-top: 0.875rem;
+  margin-bottom: -0.375rem;
+  margin-left: -0.5rem;
+  margin-right: -0.5rem;
+}
+
+.success-button-main {
+  padding-top: 0.375rem;
+  padding-bottom: 0.375rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  background-color: #ECFDF5;
+  color:  #646152;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: bold;
+  border-radius: 0.375rem;
+  border: none
+}
+
+.success-button-main:hover {
+  background-color:  #646152;
+}
+
+.success-button-secondary {
+  padding-top: 0.375rem;
+  padding-bottom: 0.375rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  margin-left: 0.75rem;
+  background-color: #ECFDF5;
+  color: #646152;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  border-radius: 0.375rem;
+  border: none;
+}

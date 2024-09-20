@@ -1,0 +1,22 @@
+<aside>
+  <nav>
+    <button [routerLink]="['/home/orders']" routerLinkActive="activetop">
+      Orders
+    </button>
+    <button [routerLink]="['/home/neworder']" routerLinkActive="active">
+      New order
+    </button>
+    <button [routerLink]="['/home/map']" routerLinkActive="active">Map</button>
+    <button
+      *ngIf="isAdmin"
+      [routerLink]="['/home/admin']"
+      routerLinkActive="active"
+    >
+      Accounts
+    </button>
+  </nav>
+  <div class="logo">
+    <img src="assets/logo-1.png" alt="Steeldux logo" />
+    <p>Steelduxx © 2024</p>
+  </div>
+</aside>

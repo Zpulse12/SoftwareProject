@@ -1,0 +1,16 @@
+<div class="top">
+    <p>STEELDUXX</p>
+    <div class="user">
+      <p>{{ userName }}</p>
+      <div class="user-interaction">
+        <img src="assets/ico-24-user-accountcircle.png" alt="profile picture" (click)="toggleDropdown()">
+        <div *ngIf="showDropdown" class="dropdown">
+          <ul>
+            <li><button>Settings</button></li>
+            <li><button (click)="logout()">Log Out</button></li>
+          </ul>
+        </div>
+      </div>
+      <app-notifications></app-notifications>
+    </div>
+  </div>

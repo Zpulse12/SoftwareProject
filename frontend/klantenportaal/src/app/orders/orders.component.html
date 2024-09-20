@@ -1,0 +1,199 @@
+<div class="contentAndDetail">
+  <div class="content" #content>
+    <div class="filters">
+      <div class="filters-row">
+        <label for="filterDeparturePort">Port of Loading:</label>
+        <select [(ngModel)]="filterDeparturePort" (change)="updateOrders(true)" id="filterDeparturePort">
+          <option value="">All Ports</option>
+          <option *ngFor="let port of portOptions" [value]="port">{{ port }}</option>
+        </select>
+
+        <label for="filterArrivalPort">Port of Destination:</label>
+        <select [(ngModel)]="filterArrivalPort" (change)="updateOrders(true)" id="filterArrivalPort">
+          <option value="">All Ports</option>
+          <option *ngFor="let port of portOptions" [value]="port">{{ port }}</option>
+        </select>
+      </div>
+      <div class="filters-row">
+        <label for="filterState">State:</label>
+        <select [(ngModel)]="filterState" (change)="updateOrders(true)" id="filterState">
+          <option value="">All States</option>
+          <option *ngFor="let state of stateOptions" [value]="state">{{ state }}</option>
+        </select>
+
+
+        <label for="filterTransportType">Transport Type:</label>
+        <select [(ngModel)]="filterTransportType" (change)="updateOrders(true)" id="filterTransportType">
+          <option value="">All Transport Types</option>
+          <option *ngFor="let type of transportTypeOptions" [value]="type">{{ type }}</option>
+        </select>
+
+
+        <label for="filterCargoType">Cargo Type:</label>
+        <select [(ngModel)]="filterCargoType" (change)="updateOrders(true)" id="filterCargoType">
+          <option value="">All Cargo Types</option>
+          <option *ngFor="let type of CargoTypeOptions" [value]="type">{{ type }}</option>
+        </select>
+      </div>
+    </div>
+    <div class="search-wrapper">
+      <input class="search-bar" type="text" placeholder="Search orders" [(ngModel)]="searchText"
+        (input)="updateOrders(true)">
+    </div>
+    <div class="orders">
+      <table class="sorting-table">
+        <thead>
+          <tr>
+            <th (click)="updateSortColumn('referenceNumber')">
+              Ref. No.
+              <img [src]="getSortImage('referenceNumber')" />
+            </th>
+            <th (click)="updateSortColumn('customerReferenceNumber')">
+              C. Ref. No.
+              <img [src]="getSortImage('customerReferenceNumber')" />
+            </th>
+            <th (click)="updateSortColumn('ets')">
+              ETS
+              <img [src]="getSortImage('ets')" />
+            </th>
+            <th (click)="updateSortColumn('ats')">
+              ATS
+              <img [src]="getSortImage('ats')" />
+            </th>
+            <th (click)="updateSortColumn('eta')">
+              ETA
+              <img [src]="getSortImage('eta')" />
+            </th>
+            <th (click)="updateSortColumn('ata')">
+              ATA
+              <img [src]="getSortImage('ata')" />
+            </th>
+            <th (click)="updateSortColumn('totalWeight')">
+              Weight
+              <img [src]="getSortImage('totalWeight')" />
+            </th>
+            <th (click)="updateSortColumn('totalContainers')">
+              Containers
+              <img [src]="getSortImage('totalContainers')" />
+            </th>
+          </tr>
+        </thead>
+      </table>
+      <table *ngFor="let order of ordersBetween" class="order-table"
+        [routerLink]="isAdmin ? ['/home/orders/order', order.customerCode, order.referenceNumber] : ['/home/orders/order', order.referenceNumber]"
+        [ngClass]="{'selected': selectedOrder == order.referenceNumber}" (click)="selectOrder(order.referenceNumber)">
+        <thead>
+          <tr>
+            <th class="ref-big" *ngIf="!isAdmin">
+              Ref. No.
+            </th>
+            <th class="ref" *ngIf="isAdmin">
+              Ref. No.
+            </th>
+            <th *ngIf="isAdmin">
+              Company Code
+            </th>
+            <th class="port">
+              Port of Loading
+            </th>
+            <th class="date" *ngIf="order.ats == null">
+              ETS
+            </th>
+            <th class="date" *ngIf="order.ats != null">
+              ATS
+            </th>
+            <th class="type">
+              Type
+            </th>
+            <th *ngIf="order.cargoType != 'CONTAINER'" class="bulk">
+              Weight
+            </th>
+            <th *ngIf="order.cargoType == 'CONTAINER'" class="weight">
+              Weight
+            </th>
+            <th *ngIf="order.cargoType == 'CONTAINER'" class="containers">
+              Containers
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td [innerHTML]="order.referenceNumber | highlighter:searchText"></td>
+            <td *ngIf="isAdmin" [innerHTML]="order.customerCode | highlighter:searchText"></td>
+            <td [innerHTML]="addBrAfter(order.portOfOriginName, ',') | highlighter:searchText"></td>
+            <td *ngIf="order.ats == null" [innerHTML]="(addBrAfter(order.ets ?? 'TBD', ' ')) | highlighter:searchText">
+            </td>
+            <td *ngIf="order.ats != null" [innerHTML]="(addBrAfter(order.ats, ' ')) | highlighter:searchText"></td>
+            <td [innerHTML]="order.transportType | highlighter:searchText"></td>
+            <td [innerHTML]="(order.totalWeight.toLocaleString() ) + ' kg' | highlighter:searchText"></td>
+            <td [innerHTML]="order.totalContainers| highlighter:searchText" *ngIf="order.cargoType == 'CONTAINER'"></td>
+          </tr>
+          <tr>
+            <th *ngIf="isAdmin" colspan="2">
+              customer Ref. No.
+            </th>
+            <th *ngIf="!isAdmin">
+              customer Ref. No.
+            </th>
+            <th>
+              Port of Destination
+            </th>
+            <th class="date" *ngIf="order.ata == null">
+              ETA
+            </th>
+            <th class="date" *ngIf="order.ata != null">
+              ATA
+            </th>
+            <th>
+              State
+            </th>
+            <th colspan="2" *ngIf="order.cargoType == 'CONTAINER'">
+              Container Types
+            </th>
+            <th *ngIf="order.cargoType != 'CONTAINER'">
+              Cargo Type
+            </th>
+          </tr>
+          <tr>
+            <td *ngIf="isAdmin" [innerHTML]="order.customerReferenceNumber | highlighter:searchText" colspan="2"></td>
+            <td *ngIf="!isAdmin" [innerHTML]="order.customerReferenceNumber | highlighter:searchText"></td>
+            <td [innerHTML]="addBrAfter(order.portOfDestinationName, ',') | highlighter:searchText"></td>
+            <td *ngIf="order.ata == null" [innerHTML]="(addBrAfter(order.eta ?? 'TBD', ' ')) | highlighter:searchText">
+            </td>
+            <td *ngIf="order.ata != null" [innerHTML]="(addBrAfter(order.ata, ' ')) | highlighter:searchText"></td>
+            <td [innerHTML]="order.state | highlighter:searchText"></td>
+            <td [innerHTML]="countUniqueItems(order.containerTypes)| highlighter:searchText" colspan="2"
+              *ngIf="order.cargoType == 'CONTAINER'"></td>
+            <td [innerHTML]="order.cargoType || 'TBD' | highlighter:searchText" *ngIf="order.cargoType != 'CONTAINER'">
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="ordersNav">
+      <button (click)="goToPage(1)" [disabled]="currentPage === 1">
+        first page
+      </button>
+      <div class="ordersNavMiddle">
+        <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1" style="margin: 0 5px 0 5px;">
+          Previous
+        </button>
+        <div class="ordersPageNum">
+          <div>page number:</div>
+          <input type="number" [(ngModel)]="currentPage" (input)="goToPage(currentPage)" min="1" max="{{ maxPage }}" />
+        </div>
+        <button (click)="goToPage(currentPage + 1)" [disabled]="maxPage === currentPage" style="margin: 0 5px 0 5px;">
+          Next
+        </button>
+      </div>
+      <button (click)="goToPage(maxPage)" [disabled]="maxPage === currentPage">
+        {{ "last page (" + maxPage + ")" }}
+      </button>
+    </div>
+  </div>
+  <div class="divider" #divider (mousedown)="startResize($event)" (mouseup)="stopResize($event)">
+  </div>
+  <div class="orderDetail" #orderDetail>
+    <router-outlet></router-outlet>
+  </div>
+</div>

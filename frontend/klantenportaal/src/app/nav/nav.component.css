@@ -1,0 +1,72 @@
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #646152;
+    border: none;
+    text-align: left; 
+    color: white;
+}
+
+nav {
+    display: flex;
+    flex-direction: column;
+    background-color: #646152;
+    flex: 0 0 auto;
+}
+
+aside {
+    display: flex;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #646152;
+}
+
+.logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 5px;
+}
+
+img {
+    width: 50px;
+    padding-bottom: 5px;
+}
+
+p {
+    color: white;
+}
+
+.active, .activetop {
+    background-color: #ffffff;
+    color: black;
+    position: relative;
+}
+
+.active::before {
+    content: "";
+    position: absolute;
+    
+    background-color: transparent;
+    top: -30px;
+    height: 30px;
+    width: 15px;
+    right: 0;
+    border-bottom-right-radius: 15px;
+    box-shadow: 0 15px 0 0 #ffffff;
+  }
+
+.active::after, .activetop::after {
+    content: "";
+    position: absolute;
+    
+    background-color: transparent;
+    bottom: -30px;
+    height: 30px;
+    width: 15px;
+    right: 0;
+    border-top-right-radius: 15px;
+    box-shadow: 0 -15px 0 0 #ffffff;
+}

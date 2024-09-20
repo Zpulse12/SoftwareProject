@@ -1,0 +1,100 @@
+<form [formGroup]="orderForm" (ngSubmit)="submitOrder()" class="order-form">
+  <div class="form-column">
+    <div>
+      <label>Customer Reference Number:</label>
+      <input formControlName="customerReferenceNumber" type="text" required />
+    </div>
+    <div>
+      <label>Transport Type:</label>
+      <select class="type" formControlName="transportType" required>
+        <option value="">Select Type</option>
+        <option value="IMPORT">Import</option>
+        <option value="EXPORT">Export</option>
+      </select>
+    </div>
+    <div>
+      <label>Port Code:</label>
+      <input formControlName="portCode" type="text" required />
+    </div>
+    <div>
+      <label>Cargo Type:</label>
+      <input formControlName="cargoType" type="text" required />
+    </div>
+  </div>
+
+  <div class="form-column" formArrayName="products">
+    <button type="button" class="add-product" (click)="addProduct()">
+      Add Product
+    </button>
+    <div class="products-list">
+      <div
+        *ngFor="let product of products.controls; let i = index"
+        [formGroupName]="i"
+      >
+        <button type="button" (click)="toggleProduct(i)">
+          {{ productVisibility[i] ? "Hide" : "Show" }} Product
+        </button>
+        <div *ngIf="productVisibility[i]">
+          <input
+            formControlName="hsCode"
+            type="text"
+            placeholder="HS Code"
+            required
+          />
+          <input
+            formControlName="name"
+            type="text"
+            placeholder="Product Name"
+            required
+          />
+          <input
+            formControlName="quantity"
+            type="number"
+            placeholder="Quantity"
+            required
+          />
+          <input
+            formControlName="weight"
+            type="number"
+            placeholder="Weight"
+            required
+          />
+          <div *ngIf="orderForm.get('cargoType')?.value !== 'BULK'">
+            <input formControlName="containerNumber" type="text" placeholder="Container Number" />
+            <input formControlName="containerType" type="text" placeholder="Container Type" />
+            <input formControlName="containerSize" type="text" placeholder="Container Size" />
+          </div>
+          <button type="button" (click)="removeProduct(i)">
+            Remove Product
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="submit" type="submit" [disabled]="!orderForm.valid">
+    Submit Order
+  </button>
+  <div class="notifications-container" *ngIf="isPopupVisible">
+    <div class="success">
+      <div class="flex">
+        <div class="flex-shrink-0">
+          <svg class="succes-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+          </svg>
+        </div>
+        <div class="success-prompt-wrap">
+          <p class="success-prompt-heading">Order completed</p>
+          <div class="success-prompt-prompt">
+            <p>The new order has been created. The reference number is {{ ref }}</p>
+          </div>
+          <div class="success-button-container">
+            <button (click)="viewOrder()" type="button" class="success-button-main">View order</button>
+            <button (click)="dismissPopup()" type="button" class="success-button-secondary">Dismiss</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</form>
+

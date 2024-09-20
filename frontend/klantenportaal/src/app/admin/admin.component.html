@@ -1,0 +1,89 @@
+<div class="table-responsive">
+  <input
+    type="text"
+    class="search-bar"
+    [(ngModel)]="searchText"
+    (input)="filterClients()"
+    placeholder="Search by name or company..."
+  />
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Client ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">Company Name</th>
+        <th scope="col">VAT Number</th>
+        <th scope="col">EORI Number</th>
+        <th scope="col">Company Code</th>
+        <th scope="col">Status</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let client of filteredClients">
+        <td>{{ client.id }}</td>
+        <td [innerHTML]="client.fullName | highlighter : searchText"></td>
+        <td [innerHTML]="client.companyName | highlighter : searchText"></td>
+        <td>
+          <input
+            type="text"
+            [(ngModel)]="client.vat"
+            (blur)="updateClient(client)"
+            required
+          />
+        </td>
+        <td>
+          <input
+            type="text"
+            [(ngModel)]="client.eori"
+            (blur)="updateClient(client)"
+            required
+          />
+        </td>
+        <td>
+          <input
+            type="text"
+            [(ngModel)]="client.companyCode"
+            (blur)="updateClient(client)"
+            required
+          />
+        </td>
+        <td>
+          <span
+            class="status-badge"
+            [ngClass]="{
+              approved: client.status === 'APPROVED',
+              denied: client.status === 'DECLINED',
+              pending: !client.status
+            }"
+          >
+            {{ client.status || "Pending" }}
+          </span>
+        </td>
+        <td>
+          <button
+            *ngIf="!client.status"
+            class="action-button approve-button"
+            (click)="approve(client.id)"
+          >
+            Approve
+          </button>
+
+          <button
+            *ngIf="!client.status"
+            class="action-button deny-button"
+            (click)="decline(client.id)"
+          >
+            decline
+          </button>
+          <button
+            class="action-button delete-button"
+            (click)="deleteClient(client.id)"
+          >
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

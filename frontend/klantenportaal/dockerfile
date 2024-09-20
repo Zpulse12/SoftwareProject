@@ -1,0 +1,12 @@
+FROM node:20.11.0-alpine as build
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+RUN npx ngcc --properties es2023 browser module main --first-only --creare-ivy-entry-points
+COPY . .
+RUN npm run build
+
+FROM nginx:stable
+COPY default.conf /etc/nginx/conf.d
+COPY --from=build /app/dist/klantenportaal/browser /usr/share/nginx/html
+EXPOSE 80

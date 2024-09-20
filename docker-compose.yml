@@ -1,0 +1,57 @@
+version: '3'
+services:
+  frontend:
+    build: ./frontend/klantenportaal
+    volumes:
+      - ./frontend/klantenportaal:/app
+    environment:
+      - MYSQL_DATABASE=KPDB
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    networks:
+      - proxy
+    labels:
+      - "traefik.http.routers.SP-steelduxx-frontend.rule=Host(`${host}`)"
+      - "traefik.http.routers.SP-steelduxx-frontend.tls=true"
+      - "traefik.http.routers.SP-steelduxx-frontend.tls.certresolver=letsencrypt"
+      - "traefik.docker.network=traefik"
+    depends_on:
+      - backend
+
+  backend:
+    build: ./backend/klantenportaal
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://database:3306/KPDB
+      SPRING_DATASOURCE_USERNAME: ${MYSQL_USER}
+      SPRING_DATASOURCE_PASSWORD: ${MYSQL_PASSWORD}
+    networks:
+      - proxy
+      - internal-network
+    labels:
+      - "traefik.http.routers.SP-steelduxx-backend.rule=Host(`${host}`) && PathPrefix(`/api`)"
+      - "traefik.http.routers.SP-steelduxx-backend.tls=true"
+      - "traefik.http.routers.SP-steelduxx-backend.tls.certresolver=letsencrypt"
+      - "traefik.docker.network=traefik"
+    depends_on:
+      - database
+    ports:
+      - 8080:8080
+
+  database:
+    build: ./database/klantenportaal
+    volumes:
+      - ./database/klantenportaal/data:/var/lib/mysql
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_DATABASE=KPDB
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    networks:
+      - internal-network
+networks:
+  internal-network:
+  proxy:
+    external: true
+    name: traefik

@@ -1,0 +1,105 @@
+p {
+    color: white;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.top {
+    height: 50px;
+    background-color: #4d4a3f;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    p {
+        margin: 0;
+        padding-left: 5px;
+    }
+}
+
+.user {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+    img {
+        height: 35px;
+        width: 35px;
+        margin-left: 10px; 
+        margin-right: 5px;
+    }
+}
+
+.dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100px;
+    z-index: 1000;
+    overflow: hidden; 
+    animation: slideDown 0.3s ease-out forwards; 
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.dropdown ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.dropdown li {
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+}
+
+.dropdown li:hover, .dropdown li:focus {
+    background-color: #e9ecef;
+}
+
+.dropdown button {
+    background: none;
+    border: none;
+    color: #333;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+}
+
+.dropdown button:focus {
+    outline: none;
+}
+
+.dropdown li {
+    position: relative;
+}
+
+.dropdown button {
+    width: 100%;
+}
+
+.user-interaction img {
+    cursor: pointer;
+}
+
+.user-interaction img:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}

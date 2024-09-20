@@ -1,0 +1,248 @@
+<div class="page">
+  <div class="image-and-logo">
+    <img class="logo-img" src="./assets/logo-1.png" />
+  </div>
+
+  <div class="content">
+    <div class="title">
+      <h2>Steelduxx customer portal</h2>
+      <img class="globe-img" src="./assets/globe.png" alt="Globe" />
+    </div>
+    <form [formGroup]="registerForm" (ngSubmit)="submit()" method="POST">
+      <h3>Personal info</h3>
+
+      <label for="fullName">
+        Name: <span>*</span>
+        <input
+          type="text"
+          id="fullName"
+          formControlName="fullName"
+          required
+          [class.input-error]="
+            registerForm.get('fullName')?.touched &&
+            registerForm.get('fullName')?.errors
+          "
+        />
+        <div
+          *ngIf="registerForm.get('fullName')?.touched && registerForm.get('fullName')?.errors?.['required']"
+        >
+          Name is required.
+        </div>
+      </label>
+
+      <label for="email">
+        E-mail: <span>*</span>
+        <input
+          type="email"
+          id="email"
+          formControlName="email"
+          required
+          [class.input-error]="
+            registerForm.get('email')?.touched &&
+            registerForm.get('email')?.errors
+          "
+        />
+        <div
+          *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.errors?.['required']"
+        >
+          Email is required.
+        </div>
+        <div
+          *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.errors?.['email']"
+        >
+          Email is not valid.
+        </div>
+      </label>
+
+      <div class="multiple-inputs">
+        <label for="password">
+          Password: <span>*</span>
+          <input
+            type="password"
+            id="password"
+            formControlName="password"
+            required
+            [class.input-error]="
+              registerForm.get('password')?.touched &&
+              registerForm.get('password')?.errors
+            "
+          />
+          <div *ngIf="registerForm.get('password')?.touched">
+            <div *ngIf="registerForm.get('password')?.errors?.['required']">
+              Password is required.
+            </div>
+            <div
+              class="RepeatPassword"
+              *ngIf="registerForm.get('password')?.errors?.['passwordInvalid']"
+            >
+              8 characters, at least one letter, one number, and one special
+              character.
+            </div>
+          </div>
+        </label>
+
+        <label for="passwordRepeat">
+          Repeat password: <span>*</span>
+          <input
+            type="password"
+            id="passwordRepeat"
+            formControlName="passwordRepeat"
+            required
+            [class.input-error]="
+              registerForm.get('passwordRepeat')?.touched &&
+              registerForm.get('password')?.value !==
+                registerForm.get('passwordRepeat')?.value
+            "
+          />
+          <div
+            *ngIf="
+              registerForm.get('passwordRepeat')?.touched &&
+              registerForm.get('password')?.value !==
+                registerForm.get('passwordRepeat')?.value
+            "
+          >
+            Passwords must match.
+          </div>
+        </label>
+      </div>
+
+      <h3>Company info</h3>
+
+      <label for="companyName">
+        Company name: <span>*</span>
+        <input
+          type="text"
+          id="companyName"
+          formControlName="companyName"
+          required
+          [class.input-error]="
+            registerForm.get('companyName')?.touched &&
+            registerForm.get('companyName')?.errors
+          "
+        />
+        <div
+          *ngIf="registerForm.get('companyName')?.touched && registerForm.get('companyName')?.errors?.['required']"
+        >
+          Company name is required.
+        </div>
+      </label>
+
+      <label for="phoneNumber">
+        Phone number: <span>*</span>
+        <input
+          type="tel"
+          id="phoneNumber"
+          formControlName="phoneNumber"
+          required
+          [class.input-error]="
+            registerForm.get('phoneNumber')?.touched &&
+            registerForm.get('phoneNumber')?.errors
+          "
+        />
+        <div
+          *ngIf="registerForm.get('phoneNumber')?.touched && registerForm.get('phoneNumber')?.errors?.['required']"
+        >
+          Phone number is required.
+        </div>
+        <div
+          *ngIf="registerForm.get('phoneNumber')?.touched && registerForm.get('phoneNumber')?.errors?.['pattern']"
+        >
+          Phone number is not valid.
+        </div>
+      </label>
+
+      <div class="multiple-inputs">
+        <label for="city">
+          Postal/zip code & City/town: <span>*</span>
+          <input
+            type="text"
+            id="city"
+            formControlName="city"
+            required
+            [class.input-error]="
+              registerForm.get('city')?.touched &&
+              registerForm.get('city')?.errors
+            "
+          />
+          <div
+            *ngIf="registerForm.get('city')?.touched && registerForm.get('city')?.errors?.['required']"
+          >
+            City is required.
+          </div>
+        </label>
+
+        <label for="country">
+          Country: <span>*</span>
+          <lib-country-list
+            (onCountryChange)="onCountryChange($event)"
+          ></lib-country-list>
+        </label>
+      </div>
+
+      <div class="multiple-inputs">
+        <label for="streetName">
+          Street: <span>*</span>
+          <input
+            type="text"
+            id="streetName"
+            formControlName="streetName"
+            required
+            [class.input-error]="
+              registerForm.get('streetName')?.touched &&
+              registerForm.get('streetName')?.errors
+            "
+          />
+          <div
+            *ngIf="registerForm.get('streetName')?.touched && registerForm.get('streetName')?.errors?.['required']"
+          >
+            Street is required.
+          </div>
+        </label>
+
+        <label for="houseNumber">
+          Street number: <span>*</span>
+          <input
+            class="small-input"
+            type="text"
+            id="houseNumber"
+            formControlName="houseNumber"
+            required
+            [class.input-error]="
+              registerForm.get('houseNumber')?.touched &&
+              registerForm.get('houseNumber')?.errors
+            "
+          />
+          <div
+            *ngIf="registerForm.get('houseNumber')?.touched && registerForm.get('houseNumber')?.errors?.['required']"
+          >
+            Street number is required.
+          </div>
+        </label>
+
+        <label for="additionalAdress">
+          Addition:
+          <input
+            class="small-input"
+            type="text"
+            id="additionalAdress"
+            formControlName="additionalAdress"
+          />
+        </label>
+      </div>
+
+      <label for="vat">
+        VAT-number:
+        <input type="text" id="vat" formControlName="vat" />
+      </label>
+    </form>
+    <div class="button-and-terms">
+      <button type="button" (click)="submit()">Register</button>
+      <p>
+        <a href="https://www.steelduxx.eu/privacy-policy/"
+          >Privacy Policy &amp; Terms of service</a
+        >
+      </p>
+    </div>
+    <p>Already have an account? <a href="/login">Login</a></p>
+  </div>
+</div>
